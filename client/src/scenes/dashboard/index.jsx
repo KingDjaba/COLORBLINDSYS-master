@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import FlexBetween from "components/FlexBetween";
 import Header from "components/Header";
 import {
@@ -9,9 +9,18 @@ import BreakdownChart from "components/BreakdownChart";
 import OverviewChart from "components/OverviewChart";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
   
+  const [authenticated, setauthenticated] = useState(null);
+    useEffect(() => {
+      const loggedInUser = localStorage.getItem("authenticated");
+      if (loggedInUser) {
+        setauthenticated(loggedInUser);
+      }
+    }, []);
+
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
   const { data, isLoading } = useGetDashboardQuery();
@@ -47,7 +56,12 @@ const Dashboard = () => {
     },
   ];
 
+  
 
+if (!authenticated) {
+  // Redirect
+ return <Navigate replace to="/loginpage" />
+  } else {
   return (
     <Box m="1.5rem 2.5rem">
       <FlexBetween>
@@ -194,6 +208,9 @@ const Dashboard = () => {
       </Box>
     </Box>
   );
+}
 };
+
+
 
 export default Dashboard;

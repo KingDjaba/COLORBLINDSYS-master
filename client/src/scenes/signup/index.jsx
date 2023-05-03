@@ -1,50 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [tel, setTel] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-
-    const postSignUpDetails = () => {
-        fetch("http://localhost:3000/api/register", {
-            method: "POST",
-            body: JSON.stringify({
-                email,
-                password,
-                tel,
-                username,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.error_message) {
-                    alert(data.error_message);
-                } else {
-                    alert(data.message);
-                    navigate("/");
-                }
-            })
-            .catch((err) => console.error(err));
-    };
+    const navigate = useNavigate()
     
+    
+   
     
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        postSignUpDetails();
-        setEmail("");
-        setTel("");
-        setUsername("");
-        setPassword("");
+       
+
     };
-    const gotoLoginPage = () => navigate("/");
+    const gotoLoginPage = () => navigate("/loginpage");
+
+    
 
     return (
         <div className='signup__container'>
@@ -68,16 +40,7 @@ const Signup = () => {
                     required
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <label htmlFor='tel'>Password</label>
-                <input
-                    type='password'
-                    name='password'
-                    id='password'
-                    minLength={8}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                
                 <label htmlFor='tel'>Confirm Password</label>
                 <input
                     type='password'

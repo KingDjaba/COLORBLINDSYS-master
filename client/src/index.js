@@ -9,6 +9,9 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 //SETTING UP LISTENERS TO QUERY THE TOOLKIT
 import {api} from "state/api";
 
+
+
+
 const store = configureStore({
   reducer: {
     global: globalReducer,

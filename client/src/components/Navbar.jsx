@@ -5,6 +5,7 @@ import { setMode } from "state";
 import profileImage from "assets/profile.jpg";
 import { AppBar, IconButton, InputBase, Menu, MenuItem, Button, Box, Typography,  Toolbar, useTheme } from '@mui/material';
 import FlexBetween from './FlexBetween';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({
     user,
@@ -18,6 +19,14 @@ const Navbar = ({
     const handleClick = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
+    const navigate = useNavigate();
+
+
+
+    const handleSignOut = () => {
+        localStorage.removeItem("username");
+        navigate("/");
+    };
    
 
   return (
@@ -66,7 +75,7 @@ const Navbar = ({
                 <ArrowDropDownCircleOutlined sx={{color: theme.palette.secondary[300], fontSize: "25px"}}/>
                     </Button>
                     <Menu anchorEl={anchorEl} open={isOpen} onClose={handleClose} anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
-                        <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                        <MenuItem onClick={handleSignOut}>Log Out</MenuItem>
                     </Menu>
                 </FlexBetween>
             </FlexBetween>

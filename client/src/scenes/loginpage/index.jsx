@@ -1,44 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
-    const postLoginDetails = () => {
-      fetch("http://localhost:3000/api/login", {
-          method: "POST",
-          body: JSON.stringify({
-              email,
-              password,
-          }),
-          headers: {
-              "Content-Type": "application/json",
-          },
-      })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.error_message) {
-              alert(data.error_message);
-          } else {
-              
-              console.log(data.data);
-              
-              localStorage.setItem("username", data.data.username);
-          }
-          })
-          .catch((err) => console.error(err));
-  };
-  
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        postLoginDetails();
-        setPassword("");
-        setEmail("");
-    };
+    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
+    const users = [{ email: "Jane", password: "testpassword" }];
+    const handleSubmit = (e) => {
+    e.preventDefault()
+    const account = users.find((user) => user.email === email);
+     if (account && account.password === password) {
+          localStorage.setItem("authenticated", true);
+          navigate("/dashboard");
+    }
+};
 
     const gotoSignUpPage = () => navigate("/signup");
 
