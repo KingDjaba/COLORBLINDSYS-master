@@ -2,16 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate()
     
-    
-   
-    
+    useEffect(() => { 
+    localStorage.setItem("Username", JSON.stringify(username));     
+}, [username]);
+
+useEffect(() => { 
+    localStorage.setItem("Email", JSON.stringify(email));     
+}, [email]);
+
+useEffect(() => { 
+    localStorage.setItem("Password", JSON.stringify(password));     
+}, [password]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-       
+        navigate("/loginpage");
 
     };
     const gotoLoginPage = () => navigate("/loginpage");

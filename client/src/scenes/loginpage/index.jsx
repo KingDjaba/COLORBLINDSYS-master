@@ -1,20 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
+    
+    const [email, setEmail] = useState([]);
+    const [password, setPassword] = useState([]);
     const navigate = useNavigate();
-    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated")|| false));
-    const users = [{ email: "Jane", password: "testpassword" }];
+    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated") || false));
+
+
+    useEffect(() => {
+      const savedEmail = JSON.parse(localStorage.getItem('Email'));
+      if (savedEmail) {
+       setEmail(email);
+      }
+    }, []);
+
+    useEffect(() => {
+        const savedPass = JSON.parse(localStorage.getItem('Password'));
+        if (savedPass) {
+         setPassword(password);
+        }
+      }, []);
+
+
     const handleSubmit = (e) => {
     e.preventDefault()
-    const account = users.find((user) => user.email === email);
-     if (account && account.password === password) {
-          localStorage.setItem("authenticated", true);
+    
           navigate("/dashboard");
-    }
+
 };
 
     const gotoSignUpPage = () => navigate("/signup");
