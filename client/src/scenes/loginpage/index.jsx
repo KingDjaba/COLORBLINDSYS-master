@@ -9,17 +9,18 @@ const Login = () => {
     const [password, setPassword] = useState([]);
     const navigate = useNavigate();
     const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated") || false));
-
+    const savedEmail = JSON.parse(localStorage.getItem('Email'));
+    const savedPass = JSON.parse(localStorage.getItem('Password'));
 
     useEffect(() => {
-      const savedEmail = JSON.parse(localStorage.getItem('Email'));
+     
       if (savedEmail) {
        setEmail(email);
       }
     }, []);
 
     useEffect(() => {
-        const savedPass = JSON.parse(localStorage.getItem('Password'));
+        
         if (savedPass) {
          setPassword(password);
         }
@@ -28,9 +29,12 @@ const Login = () => {
 
     const handleSubmit = (e) => {
     e.preventDefault()
-    
+    if (savedEmail === email&&savedPass === password) {
+    localStorage.setItem ("authenticated", true);
           navigate("/dashboard");
-
+    }else{ 
+        alert("Please Enter valid Credential")
+    }
 };
 
     const gotoSignUpPage = () => navigate("/signup");
